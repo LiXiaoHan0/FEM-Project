@@ -20,7 +20,9 @@ pip install -r requirements.txt
 
 ## 目录结构
 
-+ main.py：主程序
++ main.py：主程序文件
++ model.py：类定义文件
++ test.py：测试文件
 + input.txt：网格剖分、边界条件、外部荷载数据
 + requirements.txt：环境配置文件
 

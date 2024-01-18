@@ -1,3 +1,6 @@
+import numpy as np
+import model
+
 # 数据读入
 
 # 单元分解

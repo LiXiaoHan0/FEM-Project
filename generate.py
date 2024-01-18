@@ -32,6 +32,6 @@ file.write('61 0 0\n')
 # 输出外荷载条件
 # 节点号 x方向集中力 y方向集中力
 file.write('1\n')
-file.write('21 0 1000000\n')
+file.write('21 0 1000000000\n')
 
 file.close()
