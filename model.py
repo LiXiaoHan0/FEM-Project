@@ -8,18 +8,24 @@ v=0.2
 miu=E/2/(1+v)
 
 # 测试数据
-E=1
-miu=0
+# E=1
+# miu=0
 
 # 计算弹性矩阵
 D=E/(1-miu*miu)*np.array([[1,miu,0],[miu,1,0],[0,0,(1-miu)/2]])
 
 class point():
     
+    links=[]
+
     def __init__(self,num,x,y):
         self.num=num
         self.x=x
         self.y=y
+
+    def move(self,u,v):
+        self.u=u
+        self.v=v
 
 class element():
     
