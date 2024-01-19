@@ -25,6 +25,7 @@ pip install -r requirements.txt
 + element.py：单元分解
 + generate.py：数据生成
 + input.txt：网格剖分、边界条件、外部荷载数据
++ test.txt：测试数据，与课上ppt最后的实例一致
 + requirements.txt：环境配置文件
 
 ## 子任务

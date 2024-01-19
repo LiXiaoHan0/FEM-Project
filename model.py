@@ -1,33 +1,34 @@
 import numpy as np
 
-# 不妨假设单元厚度为1m
-t=1
-
+t=1 # 不妨假设单元厚度为1m
 E=28000000000
 v=0.2
-miu=E/2/(1+v)
 
 # 测试数据
 # E=1
-# miu=0
+# v=0
 
 # 计算弹性矩阵
-D=E/(1-miu*miu)*np.array([[1,miu,0],[miu,1,0],[0,0,(1-miu)/2]])
+D=E/(1-v*v)*np.array([[1,v,0],[v,1,0],[0,0,(1-v)/2]])
 
 class point():
     
-    links=[]
-
-    def __init__(self,num,x,y):
+    def __init__(self,num=0,x=0,y=0):
         self.num=num
         self.x=x
         self.y=y
+        self.links=[]
 
     def move(self,u,v):
         self.u=u
         self.v=v
 
 class element():
+
+    # 初始化单元属性
+    def __init__(self,num=0,p1=point(),p2=point(),p3=point()):
+        self.num=num
+        self.p=[p1,p2,p3]
     
     # 计算面积
     def __A(self):
@@ -44,13 +45,8 @@ class element():
         b=self.p[j].y-self.p[k].y
         c=self.p[k].x-self.p[j].x
         return np.array([[b,0],[0,c],[c,b]])
-
-    # 初始化单元属性
-    def __init__(self,num,p1,p2,p3):
-        self.num=num
-        self.p=[p1,p2,p3]
     
-    # 计算刚度单元刚度矩阵
+    # 计算单元刚度矩阵
     def matrix_K(self):
         A=self.__A()
         B=np.column_stack((self.__matrix_B(0),self.__matrix_B(1),self.__matrix_B(2)))/2/A
