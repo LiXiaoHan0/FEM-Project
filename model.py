@@ -29,6 +29,9 @@ class element():
     def __init__(self,num=0,p1=point(),p2=point(),p3=point()):
         self.num=num
         self.p=[p1,p2,p3]
+        self.A=self.__A()
+        self.B=self.__B()
+        self.K=self.__K()
     
     # 计算面积
     def __A(self):
@@ -39,16 +42,17 @@ class element():
         return abs(x1*y2-x2*y1)/2
 
     # 计算应变子矩阵
-    def __matrix_B(self,i): 
+    def __b(self,i): 
         j=(i+1)%3
         k=(j+1)%3
         b=self.p[j].y-self.p[k].y
         c=self.p[k].x-self.p[j].x
         return np.array([[b,0],[0,c],[c,b]])
     
+    # 计算单元应变矩阵
+    def __B(self):
+        return np.column_stack((self.__b(0),self.__b(1),self.__b(2)))/2/self.A
+
     # 计算单元刚度矩阵
-    def matrix_K(self):
-        A=self.__A()
-        B=np.column_stack((self.__matrix_B(0),self.__matrix_B(1),self.__matrix_B(2)))/2/A
-        K=np.dot(np.dot(B.T,D),B)*t*A
-        return K
+    def __K(self):
+        return np.dot(np.dot(self.B.T,D),self.B)*t*self.A

@@ -12,22 +12,19 @@ for i in range(n):
     points.append(point(*data))
 
 sticks=[] # 连杆条件
-m=int(file.readline())
-for i in range(m):
+for i in range(int(file.readline())):
     data=list(map(int,file.readline().split(' ')))
     sticks.append(data)
     points[data[0]].links.append(data[1])
     points[data[1]].links.append(data[0])
 
 borders=[] # 边界条件
-l=int(file.readline())
-for i in range(l):
+for i in range(int(file.readline())):
     data=list(map(int,file.readline().split(' ')))
     borders.append(data)
 
 forces=[] # 外力荷载
-s=int(file.readline())
-for i in range(s):
+for i in range(int(file.readline())):
     data=list(map(int,file.readline().split(' ')))
     forces.append(data)
 
@@ -55,8 +52,7 @@ for ee in elements:
         i=ee.p[t].num
         G[2*t][2*i]=1
         G[2*t+1][2*i+1]=1
-    print(ee.matrix_K())
-    K=K+np.dot(np.dot(G.T,ee.matrix_K()),G)
+    K=K+np.dot(np.dot(G.T,ee.K),G)
 
 P=np.zeros((2*n,1)) # 整体荷载向量
 for ff in forces:
