@@ -31,8 +31,9 @@ class element():
         self.p=[p1,p2,p3]
         self.A=self.__A()
         self.B=self.__B()
+        self.DB=self.__DB()
         self.K=self.__K()
-    
+
     # 计算面积
     def __A(self):
         x1=self.p[1].x-self.p[0].x
@@ -53,6 +54,16 @@ class element():
     def __B(self):
         return np.column_stack((self.__b(0),self.__b(1),self.__b(2)))/2/self.A
 
+    def __DB(self):
+        return np.dot(D,self.B)
     # 计算单元刚度矩阵
     def __K(self):
         return np.dot(np.dot(self.B.T,D),self.B)*t*self.A
+
+class proces():
+
+    # 初始化单元属性
+    def __init__(self,a,b,c,d,e,f,B,DB):
+        self.move = np.array([[a], [b], [c], [d], [e], [f]])
+        self.xigema=np.dot(B,self.move)
+        self.epislon=np.dot(DB,self.move)

@@ -1,5 +1,5 @@
 import numpy as np
-from model import point,element
+from model import point,element,proces
 from task import preprocess,postprocess
 
 ######################### 数据读入 #########################
@@ -72,8 +72,22 @@ for bb in borders:
 
 # 求解线性方程组
 ans=np.linalg.solve(K,P)
+
 for i in range(n):
     points[i].move(ans[2*i][0],ans[2*i+1][0])
+ll = len(elements)
 
-# 绘制应力/应变等值线图
-postprocess(points)
+# 求出每个有限元的位移矩阵，并计算应力应变
+process=[proces(1,1,1,1,1,1,elements[i].B,elements[i].DB) for i in range(ll)]
+for i in range(ll):
+    aaa=ans[elements[i].p[0].num*2][0]
+    bbb=ans[elements[i].p[0].num*2+1][0]
+    ccc=ans[elements[i].p[1].num*2][0]
+    ddd=ans[elements[i].p[1].num*2+1][0]
+    eee=ans[elements[i].p[2].num*2][0]
+    fff=ans[elements[i].p[2].num*2+1][0]
+    process[i]=proces(aaa,bbb,ccc,ddd,eee,fff,elements[i].B,elements[i].DB)
+for i in range(6):
+    postprocess(points,sticks,elements,process,(i+1))
+
+# 绘制应力/应变各矢量分量的二维云图
